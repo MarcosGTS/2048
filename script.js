@@ -34,6 +34,7 @@ function initGame (context) {
     }
 
     state.grid = createGrid()
+    generateNumber()
 
     function update() {
         generateNumber()
@@ -50,7 +51,28 @@ function initGame (context) {
             randomY = Math.floor(Math.random() * GRID_SIZE)
         }
         
-        grid[randomY][randomX] = "2"
+        grid[randomY][randomX] = 2
+    }
+
+    function move() {
+        const grid = state.grid
+        for (let row = 0; row < GRID_SIZE; row++) {
+        for (let col = GRID_SIZE - 1; col >= 0; col--) {
+            
+            if (grid[row][col] == "") continue
+            
+            let offset = 1
+            
+            while (grid[row][col + offset] == "")  {offset++}
+              
+            if (grid[row][col + offset] == grid[row][col]) {
+                grid[row][col + offset] = grid[row][col + offset] + grid[row][col]
+            } else {
+                grid[row][col + offset - 1] = grid[row][col]
+            }
+
+            if (offset > 1) grid[row][col] = ""
+        }}
     }
 
     function renderGrid(context) {
@@ -81,10 +103,12 @@ function initGame (context) {
 
     return {
         state, 
-        update
+        update,
+        move
     }
 }
 
 document.addEventListener("keydown", () => {
+    game.move()
     game.update()
 })
