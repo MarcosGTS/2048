@@ -64,8 +64,18 @@ function initGame (context) {
         renderGrid(context)
     }
 
+    function getMaxValue(matrix) {
+        let flatedMatrix = []
+        for (row of matrix) {
+            flatedMatrix = flatedMatrix.concat(row)
+        }
+
+        return flatedMatrix.reduce((prev, crr) => crr > prev ? crr : prev, 0)
+    }
+
     function generateNumber () {
         const grid = state.grid
+
         let randomX = Math.floor(Math.random() * GRID_SIZE)
         let randomY = Math.floor(Math.random() * GRID_SIZE)
 
@@ -74,7 +84,9 @@ function initGame (context) {
             randomY = Math.floor(Math.random() * GRID_SIZE)
         }
         
-        grid[randomY][randomX] = 2
+        let maxValue = Math.max(getMaxValue(grid), 4)
+        const power = Math.floor(Math.random() * (Math.log2(maxValue) - 1) + 1)
+        grid[randomY][randomX] = 2 ** power
     }
 
     function moveRight() {
