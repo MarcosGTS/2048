@@ -77,8 +77,39 @@ function initGame (context) {
         grid[randomY][randomX] = 2
     }
 
-    function move() {
-        const grid = state.grid
+    function moveRight() {
+        move(state.grid)
+    }
+
+    function moveLeft() {
+        let {grid} = state
+        grid = rotateBy(grid, 2)
+        grid = move(grid)
+        grid = rotateBy(grid, 2)
+
+        state.grid = grid
+    }
+
+    function moveUp() {
+        let {grid} = state
+        grid = rotateBy(grid, 1)
+        grid = move(grid)
+        grid = rotateBy(grid, 3)
+
+        state.grid = grid
+    }
+
+    function moveDown() {
+        let {grid} = state
+        grid = rotateBy(grid, 3)
+        grid = move(grid)
+        grid = rotateBy(grid, 1)
+
+        state.grid = grid
+    }
+
+    function move(matrix) {
+        const grid = matrix
         for (let row = 0; row < GRID_SIZE; row++) {
         for (let col = GRID_SIZE - 1; col >= 0; col--) {
             
@@ -96,6 +127,7 @@ function initGame (context) {
 
             if (offset > 1) grid[row][col] = ""
         }}
+        return matrix
     }
 
     function renderGrid(context) {
@@ -127,11 +159,21 @@ function initGame (context) {
     return {
         state, 
         update,
-        move
+        moveLeft,
+        moveRight,
+        moveUp,
+        moveDown,
     }
 }
 
-document.addEventListener("keydown", () => {
-    game.move()
+document.addEventListener("keydown", (event) => {
+    const moveSet = {
+        "ArrowDown": game.moveDown,
+        "ArrowUp": game.moveUp,
+        "ArrowLeft": game.moveLeft,
+        "ArrowRight": game.moveRight,
+    }
+    
+    if (moveSet[event.key]) moveSet[event.key]()
     game.update()
 })
