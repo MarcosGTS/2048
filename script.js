@@ -1,5 +1,5 @@
 const CANVAS_SIZE = 500
-const GRID_SIZE = 8
+const GRID_SIZE = 4
 const CELL_SIZE = 500 / 8
 
 
@@ -121,6 +121,7 @@ function initGame (context) {
               
             if (grid[row][col + offset] == grid[row][col]) {
                 grid[row][col + offset] = grid[row][col + offset] + grid[row][col]
+                grid[row][col] = ""
             } else {
                 grid[row][col + offset - 1] = grid[row][col]
             }
