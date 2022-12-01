@@ -54,14 +54,27 @@ game.update()
 function initGame (context) {
     const state = {
         grid: [],
+        prev: null,
     }
 
     state.grid = createGrid()
     generateNumber()
 
     function update() {
-        generateNumber()
+        if (checkChanges()) generateNumber()
         renderGrid(context)
+    }
+
+    function checkChanges() {
+
+        if (!state.prev) return true
+
+        for (let row = 0; row < state.grid.length; row++) {
+        for (let col = 0; col < state.grid[0].length; col++){
+            if (state.grid[row][col] != state.prev[row][col]) return true
+        }}
+
+        return  false
     }
 
     function getMaxValue(matrix) {
@@ -90,7 +103,11 @@ function initGame (context) {
     }
 
     function moveRight() {
-        move(state.grid)
+        let {grid} = state
+        grid = move(grid)
+
+        state.prev = state.grid
+        state.grid = grid
     }
 
     function moveLeft() {
@@ -99,6 +116,7 @@ function initGame (context) {
         grid = move(grid)
         grid = rotateBy(grid, 2)
 
+        state.prev = state.grid
         state.grid = grid
     }
 
@@ -108,6 +126,7 @@ function initGame (context) {
         grid = move(grid)
         grid = rotateBy(grid, 3)
 
+        state.prev = state.grid
         state.grid = grid
     }
 
@@ -117,29 +136,33 @@ function initGame (context) {
         grid = move(grid)
         grid = rotateBy(grid, 1)
 
+        state.prev = state.grid
         state.grid = grid
     }
 
     function move(matrix) {
         const grid = matrix
+       
         for (let row = 0; row < GRID_SIZE; row++) {
         for (let col = GRID_SIZE - 1; col >= 0; col--) {
             
-            if (grid[row][col] == "") continue
-            
+            let value = grid[row][col]
             let offset = 1
+
+            if (value == "") continue
             
             while (grid[row][col + offset] == "")  {offset++}
-              
-            if (grid[row][col + offset] == grid[row][col]) {
-                grid[row][col + offset] = grid[row][col + offset] + grid[row][col]
-                grid[row][col] = ""
+            
+            grid[row][col] = ""
+
+            if (grid[row][col + offset] == value) {
+                grid[row][col + offset] = grid[row][col + offset] + value
             } else {
-                grid[row][col + offset - 1] = grid[row][col]
+                grid[row][col + offset - 1] = value
             }
 
-            if (offset > 1) grid[row][col] = ""
         }}
+
         return matrix
     }
 
