@@ -2,7 +2,6 @@ const CANVAS_SIZE = 500
 const GRID_SIZE = 4
 const CELL_SIZE = 500 / 8
 
-
 const GRID_COLOR = "black"
 
 const canvas = document.getElementById("Canvas")
@@ -104,17 +103,7 @@ function initGame (context) {
 
     function moveRight() {
         let {grid} = state
-        grid = move(grid)
-
-        state.prev = state.grid
-        state.grid = grid
-    }
-
-    function moveLeft() {
-        let {grid} = state
-        grid = rotateBy(grid, 2)
-        grid = move(grid)
-        grid = rotateBy(grid, 2)
+        grid = moveDirectional(grid, 0)
 
         state.prev = state.grid
         state.grid = grid
@@ -122,9 +111,15 @@ function initGame (context) {
 
     function moveUp() {
         let {grid} = state
-        grid = rotateBy(grid, 1)
-        grid = move(grid)
-        grid = rotateBy(grid, 3)
+        grid = moveDirectional(grid, 1)
+
+        state.prev = state.grid
+        state.grid = grid
+    }
+
+    function moveLeft() {
+        let {grid} = state
+        grid = moveDirectional(grid, 2)
 
         state.prev = state.grid
         state.grid = grid
@@ -132,13 +127,28 @@ function initGame (context) {
 
     function moveDown() {
         let {grid} = state
-        grid = rotateBy(grid, 3)
-        grid = move(grid)
-        grid = rotateBy(grid, 1)
+        grid = moveDirectional(grid, 3)
 
         state.prev = state.grid
-        state.grid = grid
+        state.grid = grid   
     }
+
+    function moveDirectional(grid, direction = 0) {
+        /*
+            0 - right
+            1 - up
+            2 - left
+            3 - down 
+        */
+
+        grid = rotateBy(grid, direction)
+        grid = move(grid)
+        grid = rotateBy(grid, 4 - direction)
+
+        return grid
+    }
+
+    
 
     function move(matrix) {
         const grid = matrix
