@@ -60,17 +60,17 @@ function initGame (context) {
     generateNumber()
 
     function update() {
-        if (checkChanges()) generateNumber()
+        if (checkChanges(state.grid, state.prev)) generateNumber()
         renderGrid(context)
     }
 
-    function checkChanges() {
+    function checkChanges(crr, prev) {
 
-        if (!state.prev) return true
+        if (!prev) return true
 
-        for (let row = 0; row < state.grid.length; row++) {
-        for (let col = 0; col < state.grid[0].length; col++){
-            if (state.grid[row][col] != state.prev[row][col]) return true
+        for (let row = 0; row < crr.length; row++) {
+        for (let col = 0; col < crr[0].length; col++){
+            if (crr[row][col] != prev[row][col]) return true
         }}
 
         return  false
@@ -148,7 +148,16 @@ function initGame (context) {
         return grid
     }
 
-    
+    function checkGameOver() {
+
+        let {grid} = state
+        for (let direction = 0; direction < 4; direction++) {
+            const fureteState = moveDirectional(grid, direction)
+            if (checkChanges(fureteState, grid)) return false
+        }
+
+        return true
+    }
 
     function move(matrix) {
         const grid = matrix
@@ -209,6 +218,7 @@ function initGame (context) {
         moveRight,
         moveUp,
         moveDown,
+        checkGameOver,
     }
 }
 
@@ -222,4 +232,7 @@ document.addEventListener("keydown", (event) => {
     
     if (moveSet[event.key]) moveSet[event.key]()
     game.update()
+    
+    if(game.checkGameOver()) console.log("gameover")
 })
+
