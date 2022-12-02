@@ -1,8 +1,9 @@
-const CANVAS_SIZE = 500
+const CANVAS_SIZE = 300
 const GRID_SIZE = 4
-const CELL_SIZE = 500 / 8
+const CELL_SIZE = CANVAS_SIZE / GRID_SIZE
 
 const GRID_COLOR = "black"
+const CELL_COLORS = []
 
 const canvas = document.getElementById("Canvas")
 const context = canvas.getContext("2d")
@@ -160,7 +161,8 @@ function initGame (context) {
     }
 
     function move(matrix) {
-        const grid = matrix
+        //copy nested arrays
+        const grid = JSON.parse(JSON.stringify(matrix)); 
        
         for (let row = 0; row < GRID_SIZE; row++) {
         for (let col = GRID_SIZE - 1; col >= 0; col--) {
@@ -182,7 +184,7 @@ function initGame (context) {
 
         }}
 
-        return matrix
+        return grid
     }
 
     function renderGrid(context) {
@@ -200,6 +202,8 @@ function initGame (context) {
                 context.fillRect(canvasX, canvasY, CELL_SIZE, CELL_SIZE)
                 context.strokeRect(canvasX, canvasY, CELL_SIZE, CELL_SIZE)
     
+
+                context.font = "24px serif"
                 context.fillStyle = "black"
                 context.textAlign = "center"
                 context.textBaseLine = "center"
@@ -208,6 +212,17 @@ function initGame (context) {
                 const centerY = canvasY + CELL_SIZE/2
                 context.fillText(number, centerX, centerY, CELL_SIZE)
             }
+        }
+
+        if (checkGameOver()) { 
+            context.fillStyle = 'rgba(255, 255, 255, 0.6)';
+            context.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE)
+
+
+            context.font = "48px serif"
+            context.fillStyle = "black"
+            context.textAlign = "center"
+            context.fillText("Game Over!", CANVAS_SIZE/2, CANVAS_SIZE/2)
         }
     }
 
