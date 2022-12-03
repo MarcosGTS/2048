@@ -1,0 +1,105 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    
+    flex-direction: column;
+    align-items: center;
+}
+
+main {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: auto;
+}
+h1 {
+    margin:  20px 0 20% 0;
+}
+
+.wrapper {
+
+    display: grid;
+    grid-template-columns: 30px 300px 30px;
+    grid-template-rows: 30px 300px 30px;
+}
+
+canvas {
+    grid-column-start: 2;
+    grid-column-end: 2;
+    grid-row-start: 2;
+    grid-row-end: 2;
+}
+
+#up {
+    grid-column-start: 2;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 1;
+}
+
+#up img {
+    transform: rotate(180deg);
+}
+
+#right {
+    grid-column-start: 3;
+    grid-column-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 2;
+}
+
+#right img {
+    transform: rotate(-90deg);
+}
+
+#down {
+    grid-column-start: 2;
+    grid-column-end: 2;
+    grid-row-start: 3;
+    grid-row-end: 3;
+}
+
+#down img {
+    transform: rotate(0deg);
+}
+
+#left {
+    grid-column-start: 1;
+    grid-column-end: 1;
+    grid-row-start: 2;
+    grid-row-end: 2;
+}
+
+#left img {
+    transform: rotate(90deg);
+}
+
+footer {
+    width: 100vw;
+    color: white;
+    background-color: #63145b;
+    margin-bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.icon {
+    height: auto;
+    width: 20px;
+}
+
+.github img {
+    margin: 8px;
+    width: 24px;
+    height: auto;
+}
