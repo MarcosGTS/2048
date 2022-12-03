@@ -3,7 +3,7 @@ const GRID_SIZE = 4
 const CELL_SIZE = CANVAS_SIZE / GRID_SIZE
 
 const GRID_COLOR = "black"
-const CELL_COLORS = []
+const CELL_COLORS = ["yellow", "orange", "purple", "green", "red", "blue", "gray"]
 
 const canvas = document.getElementById("Canvas")
 const context = canvas.getContext("2d")
@@ -187,6 +187,10 @@ function initGame (context) {
         return grid
     }
 
+    function getColorByValue(value) {
+        return CELL_COLORS[Math.log2(value) - 1] || "white"
+    }
+
     function renderGrid(context) {
         const grid = state.grid;
         for (let row = 0; row < grid.length; row++) {
@@ -197,7 +201,7 @@ function initGame (context) {
                 const canvasX = col * CELL_SIZE
                 const canvasY = row * CELL_SIZE
     
-                context.fillStyle = "white"
+                context.fillStyle = getColorByValue(number)
                 context.strokeStyle = GRID_COLOR
                 context.fillRect(canvasX, canvasY, CELL_SIZE, CELL_SIZE)
                 context.strokeRect(canvasX, canvasY, CELL_SIZE, CELL_SIZE)
