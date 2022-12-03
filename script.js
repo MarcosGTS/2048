@@ -6,6 +6,7 @@ const GRID_COLOR = "black"
 const CELL_COLORS = ["yellow", "orange", "purple", "green", "red", "blue", "gray"]
 
 const canvas = document.getElementById("Canvas")
+const buttons = document.getElementsByTagName("button")
 const context = canvas.getContext("2d")
 
 canvas.width = CANVAS_SIZE
@@ -206,7 +207,6 @@ function initGame (context) {
                 context.fillRect(canvasX, canvasY, CELL_SIZE, CELL_SIZE)
                 context.strokeRect(canvasX, canvasY, CELL_SIZE, CELL_SIZE)
     
-
                 context.font = "24px serif"
                 context.fillStyle = "black"
                 context.textAlign = "center"
@@ -241,17 +241,24 @@ function initGame (context) {
     }
 }
 
+const moveSet = {
+    "ArrowDown": game.moveDown,
+    "ArrowUp": game.moveUp,
+    "ArrowLeft": game.moveLeft,
+    "ArrowRight": game.moveRight,
+}
+
 document.addEventListener("keydown", (event) => {
-    const moveSet = {
-        "ArrowDown": game.moveDown,
-        "ArrowUp": game.moveUp,
-        "ArrowLeft": game.moveLeft,
-        "ArrowRight": game.moveRight,
-    }
-    
+    if(game.checkGameOver()) console.log("gameover")
     if (moveSet[event.key]) moveSet[event.key]()
     game.update()
-    
-    if(game.checkGameOver()) console.log("gameover")
 })
 
+for (const button of buttons) {
+    
+    button.addEventListener("click", () => {
+        if(game.checkGameOver()) console.log("gameover")
+        if (moveSet[button.id]) moveSet[button.id]()
+        game.update()
+    })
+}

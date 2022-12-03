@@ -36,47 +36,47 @@ canvas {
     grid-row-end: 2;
 }
 
-#up {
+#ArrowUp {
     grid-column-start: 2;
     grid-column-end: 2;
     grid-row-start: 1;
     grid-row-end: 1;
 }
 
-#up img {
+#ArrowUp img {
     transform: rotate(180deg);
 }
 
-#right {
+#ArrowRight {
     grid-column-start: 3;
     grid-column-end: 3;
     grid-row-start: 2;
     grid-row-end: 2;
 }
 
-#right img {
+#ArrowRight img {
     transform: rotate(-90deg);
 }
 
-#down {
+#ArrowDown {
     grid-column-start: 2;
     grid-column-end: 2;
     grid-row-start: 3;
     grid-row-end: 3;
 }
 
-#down img {
+#ArrowDown img {
     transform: rotate(0deg);
 }
 
-#left {
+#ArrowLeft {
     grid-column-start: 1;
     grid-column-end: 1;
     grid-row-start: 2;
     grid-row-end: 2;
 }
 
-#left img {
+#ArrowLeft img {
     transform: rotate(90deg);
 }
 
