@@ -23,7 +23,6 @@ h1 {
 }
 
 .wrapper {
-
     display: grid;
     grid-template-columns: 30px 300px 30px;
     grid-template-rows: 30px 300px 30px;
