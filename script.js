@@ -37,7 +37,8 @@ for (const button of buttons) {
 
 function update(command) {
     if (game.checkGameOver()) console.log("gameover")
-    if (moveSet[command]) moveSet[command]()
+    if (!moveSet[command]) return
+    moveSet[command]()
     game.update()
     renderGrid(game.state.grid, context)
 }
